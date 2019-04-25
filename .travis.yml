@@ -10,7 +10,7 @@ script:
 after_script:
 - molecule destroy
 before_install:
-- openssl aes-256-cbc -K $encrypted_a5a5042ef067_key -iv $encrypted_a5a5042ef067_iv
+- openssl aes-256-cbc -K $encrypted_dbbd4c0ab462_key -iv $encrypted_dbbd4c0ab462_iv
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 - mv google_compute_engine /home/travis/.ssh/
