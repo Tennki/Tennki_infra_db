@@ -4,5 +4,4 @@
 credentials.json
 google_compute_engine
 *_INSTALL.rst
-temp/
 .venv/
