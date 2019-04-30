@@ -1,40 +1,36 @@
 [![Build Status](https://travis-ci.com/Tennki/ansible-role-db.svg?branch=master)](hhttps://travis-ci.com/Tennki/ansible-role-db)
 
-Role Name
+Ansible-db-role
 =========
+Тестовая роль db
 
-A brief description of the role goes here.
+Краткое руководство по настройке Travis + Molecule + GCE
+# Генерируем ключ для подключения по SSH
+ssh-keygen -t rsa -f google_compute_engine -C 'travis' -q -N ''
+# Создаем ключ в метадате проекта infra в GCP
 
-Requirements
-------------
+# Должен быть предварительно создан сервисный аккаунт и скачаны креды (credentials.json)
+Сервисному аккаунту надо добавить роли:
+ Администратор Compute
+ Пользователь сервисного аккаунта
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+# Должна быть предварительно подключена данная репа в тревисе
+travis encrypt GCE_SERVICE_ACCOUNT_EMAIL='travis-ci@infra-######.iam.gserviceaccount.com' --add
+travis encrypt GCE_CREDENTIALS_FILE="\"\$(pwd)/credentials.json\"" --add
+travis encrypt GCE_PROJECT_ID='infra-######' --add
 
-Role Variables
---------------
+# шифруем файлы
+tar cvf secrets.tar credentials.json google_compute_engine
+travis login
+travis encrypt-file secrets.tar --add
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+# пушим и проверяем изменения
+git commit -m 'Added Travis integration'
+git push
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+# Если не использовать travis encrypt-file для шифрования архива или использовать другую версию openssl, то могут возникнуть проблемы при расшифровке на стороне тревиса. На стороне travis установлена версия 1.0.1f.
+# Можно обойти так. В настройках репозитория создаем ключ travis_key.
+- шифруем у себя: 
+docker run --rm -it -v $(pwd):/export frapsoft/openssl aes-256-cbc -k $travis_key -in /export/try_secrets.tar.enc -out /export/secrets.tar
+- добавляем в travis.yml
+docker run --rm -it -v $(pwd):/export frapsoft/openssl aes-256-cbc -d -k $travis_key -in /export/try_secrets.tar.enc -out /export/secrets.tar
