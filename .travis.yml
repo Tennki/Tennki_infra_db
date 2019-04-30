@@ -16,6 +16,7 @@ before_install:
 - tar xvf secrets.tar
 - mv google_compute_engine /home/travis/.ssh/
 - chmod 0600 /home/travis/.ssh/google_compute_engine
+- echo $GCE_CREDENTIALS_FILE
 - ln -s $(pwd) $(dirname `pwd`)/$ROLE_NAME
 - export ANSIBLE_ROLES_PATH="$(dirname `pwd`)/$ROLE_NAME"
 notifications:
@@ -27,4 +28,4 @@ env:
   - ROLE_NAME: db
   - secure: XJB4sRFwoNgZMumD1IhD6HqKix4dhsa6odAQJh+oS4qu+LXC7EcdqlD/PVYyU1Nt0TBTukdrfn5WK6dPU2wVlD/Aoxo+20YncqHL4fEKthBY0esesBzjbrbkG/2j19M4xEcGjdl49Edchmf69UWhAM89uar0K52OEEY4Ui3vLnTdaJAeHT4mfOmX4mzWXkO2AwhhtZQiLyVJyftckoH/EuPAJQdFg1q754rhQOS8jGIhj5suC+eYREljyfiE6U1SN6xrXYGArP7pGZX4ratYm9Il8WBoLSyO18fukZcty1n0/a8lmyV0zs+IycV9C5q0J0wz79PJISwVlzS4jb9RBjKf2n9XaIfK5JFfigUMfGLZlfkBeQulg+JX/qc2L2DBR0KRrGK7eLWzm8dC0L38haYhkhINuURfWIiAEqPOaTcNvgrCVHTOk5wRpV75uUhqY1q2MwROTMHxWyX9j+s32Wrl8Y1iFTb+d7/Ixet8M/1dfo59RCXPa1hsdLXEY7z6saq7ac3bfku7h+4xtUzPCt7QVb55ZVQnY9IulfznUaSdYcvdJyfKWy83o0yXAnmLHOmQH4zCBoiTzedXfTtX1Wk/XIvVcVvYpUuD+31VaEG5TLU7x3j2+6ZyNnOcuq4dFCNizEfuai9Y+cUP4z2gnNO6P1m67d7oN4FRpWGLOt8=
   - secure: VauSOdFy51sFOyOCg685uih0rvZy+g+WwJq4rFgc3lzTvRHUdXwS6fSxfc1uuNlrTeMPainNMjaGgExNZBdY2cCvYXXL4nvSy3xqlPS7WZF2lV2bBE30LYmDIRGdbXWHYqDbZ2TNapmSdWILP2jupew9Q/Qw6bJZRnU5feCV/cmoxuDWnOyKN2roUCkK/Lhklo9jyGmYGkEJ17n5PZUgfNPPyRMz3/YR1gF/8JilJzHPOlxBghYevnffYgVenalB2lLMGfXy3AUHaLymQmKbv2lAlpz2+cYxA3QgHvJtPr4J+TU4ivdLgu+P1YMda581vIydDqhCU8nHQPoUM/5o7t13ZD2dds9aoa+I8do4hSw2Wscgfvs6trQBGBE+Devby5gZsnzbuMTqcD3A3Yrl40wakyr59cswYpuUuHrwzmis8jJOq2i7qx9W26/1LMJ3cKMwc2Gi/zVlfhmFueBybbmCYTs9yLdftWc/JMf1WQxLUBgpOu+NEsvu/gQ8mo8Og6Ogg37Rnx4p69CFeyvQr4FYjPxsp3wPNfb6m9xDOhfwbB2WOHemxc86q0+52lFGMf9ksCRM8Vsxxzlu/mlEEwQobBsB0JGPyizLmm8wvupGyzku5Bxd/pNz0a+PAGVvuJenBpZnkHl0brT9lJVplhwsltKZT+9BOTFoQ6nbYKc=
-  - GCE_CREDENTIALS_FILE: "$(pwd)/credentials.json"
+  - GCE_CREDENTIALS_FILE: "$(pwd)\/credentials.json"
